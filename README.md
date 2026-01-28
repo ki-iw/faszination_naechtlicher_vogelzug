@@ -122,5 +122,5 @@ No routing. The component is self-contained and can be placed anywhere on the pa
 App-level settings are in `src/config.ts`:
 
 | Option | Default | Description |
-|---|---|---|
-| `SHOW_DEMO_INFOPOINTS` | `false` | Show static info markers on the map (demo/development only) |
+|---|---------|---|
+| `SHOW_DEMO_INFOPOINTS` | `true`  | Show static info markers on the map (demo/development only) |
