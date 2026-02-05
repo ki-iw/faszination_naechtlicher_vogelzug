@@ -66,7 +66,7 @@ const useAvailableSpecies = (selectedSpecies: string[]) => {
             to: dateRange.to.toISOString(),
           },
         },
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
       });
 
       if (!data) {
