@@ -18,12 +18,14 @@ interface ContextValues {
   windowSize: number;
   isNightOnly: boolean;
   isPlaying: boolean;
+  isPlaybackBlocked: boolean;
 
   handleDateRangeChange: (newRange: { from: Dayjs; to: Dayjs }) => void;
   setSliderMinute: (minute: number) => void;
   setWindowSize: (minutes: number) => void;
   setIsNightOnly: (isNightOnly: boolean) => void;
   togglePlay: () => void;
+  setIsPlaybackBlocked: (blocked: boolean) => void;
 }
 
 const PLAYBACK_SPEED_MS = 300;
@@ -41,6 +43,7 @@ interface TimeSegment {
 
 const DatesProvider = ({ children }: PropsWithChildren) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaybackBlocked, setIsPlaybackBlocked] = useState(false);
   const [isNightOnly, setIsNightOnly] = useState(true);
   const [dateRange, setDateRange] = useState({
     from: dayjs().subtract(1, "day").startOf("hour"),
@@ -164,7 +167,7 @@ const DatesProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     let timer: number;
 
-    if (isPlaying) {
+    if (isPlaying && !isPlaybackBlocked) {
       timer = setTimeout(() => {
         const nextMinute = currentSliderMinute + PLAYBACK_STEP_MINUTES;
 
@@ -181,7 +184,7 @@ const DatesProvider = ({ children }: PropsWithChildren) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [isPlaying, currentSliderMinute, totalMinutes, setSliderMinute]);
+  }, [isPlaying, isPlaybackBlocked, currentSliderMinute, totalMinutes, setSliderMinute]);
 
   useEffect(() => {
     // reset slider back to 0
@@ -204,11 +207,13 @@ const DatesProvider = ({ children }: PropsWithChildren) => {
       windowSize,
       isNightOnly,
       isPlaying,
+      isPlaybackBlocked,
       handleDateRangeChange,
       setSliderMinute,
       setWindowSize,
       setIsNightOnly,
       togglePlay,
+      setIsPlaybackBlocked,
     }),
     [
       dateRange,
@@ -218,11 +223,13 @@ const DatesProvider = ({ children }: PropsWithChildren) => {
       windowSize,
       isNightOnly,
       isPlaying,
+      isPlaybackBlocked,
       handleDateRangeChange,
       setSliderMinute,
       setWindowSize,
       setIsNightOnly,
       togglePlay,
+      setIsPlaybackBlocked,
     ],
   );
 

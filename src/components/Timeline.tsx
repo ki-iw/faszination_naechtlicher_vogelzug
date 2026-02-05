@@ -180,6 +180,9 @@ const Timeline: React.FC = () => {
             rail: "bg-gray-400",
             handle: "[&:after]:bg-primary [&:after]:shadow-none",
           }}
+          tooltip={{
+            formatter: () => visualisationTimeRange.from.format("HH:mm"),
+          }}
         />
         <p className="whitespace-nowrap min-w-fit">
           {visualisationTimeRange.from.format("DD.MM.YYYY HH:mm")} -{" "}
